@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "daafe366-ca63-4b8e-8245-898968688b0a"
+      }
+    },
+    "owner": "leebonhoon"
   }
 }
