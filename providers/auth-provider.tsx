@@ -3,11 +3,23 @@ import { Session } from "@supabase/supabase-js";
 import { useRouter } from "expo-router";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-export const authContext = createContext({
-  user: {},
-  setUser: ({}) => {},
+type User = {
+  id: string;
+  username: string;
+  avatar: string | null;
+  created_at: string;
+};
+
+export const authContext = createContext<{
+  user: User | null;
+  setUser: (user: User) => void;
+  logOut: () => void;
+  createUser: (username: string) => Promise<{ error: string | undefined }>;
+}>({
+  user: null,
+  setUser: () => {},
   logOut: () => {},
-  createUser: (username: string) => {},
+  createUser: () => Promise.resolve({ error: undefined }),
 });
 
 export const useAuth = () => {
@@ -16,7 +28,7 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
 
   const createUser = async (username: string) => {
